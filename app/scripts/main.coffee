@@ -1,6 +1,7 @@
-console.log('\'Allo \'Allo!');
+console.log('test for google drive based on enterprise framework...')
 
-casper = require('casper').create();
+# casper = require('casper').create()
+casper.options.logLevel = 'info'
 
 casper.test.begin('Casper Test for enterprise', 4, (test)->
     
@@ -17,16 +18,17 @@ casper.test.begin('Casper Test for enterprise', 4, (test)->
 	casper.then(()->
 		# retrive title
 		title = this.getTitle();
+		console.log title
 		return if title is 'enterprise framework'
 			# logined already, skip to next
 		
 		login_form = test.assertExists('form#gaia_loginform');
 		if ((title == '登录 - Google 帐户' or 'Sign in - Google Accounts') and login_form) 
-			test.fill('form#gaia_loginform',
+			this.fill('form#gaia_loginform',
 				Email : 'release@nimbusbase.com'
 				Passwd : 'freethecloud2013'
 			,true)
-			test.ok('Filled in with test account and submitted')
+			console.log('Filled in with test account and submitted')
 		
 
 	)
@@ -36,15 +38,17 @@ casper.test.begin('Casper Test for enterprise', 4, (test)->
 		title = this.getTitle();
 		if title is "Request for Permission"
 			this.mouse.click('#submit_approve_access')
-			test.ok('Granted permission')
+			console.log('Granted permission')
 		
 	)
 
 	# wait for redirect back
 	casper.then(()->
 		# check for authorized
-		authed = Nimbus.Auth.authorized();
-		test.assertEquals(authed,true,'Login succeed');
+		this.evaluateOrDie(()->
+			console.log()
+			return Nimbus.Auth.authorized()
+		,'Login Failed')
 		test.done()
 	)
 

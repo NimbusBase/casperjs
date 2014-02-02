@@ -18,13 +18,13 @@ casper.test.begin('Casper Test for enterprise', 4, (test)->
 
     login_form = test.assertExists('form[action="/login"]');
     if ((title is 'Dropbox - 登录' or 'Dropbox - Sign in') and login_form)
-        test.fill('form#gaia_loginform',
+        this.fill('form#gaia_loginform',
             login_email : 'release@nimbusbase.com'
             login_password : 'freethecloud2013'
         ,true)
         test.ok('Filled in with test account and submitted')
 
   )
-  
+
   return
 )

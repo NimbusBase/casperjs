@@ -16,7 +16,7 @@ casper.test.begin('Casper Test for enterprise', 4, function(test) {
     }
     login_form = test.assertExists('form[action="/login"]');
     if ((title === 'Dropbox - 登录' || 'Dropbox - Sign in') && login_form) {
-      test.fill('form#gaia_loginform', {
+      this.fill('form#gaia_loginform', {
         login_email: 'release@nimbusbase.com',
         login_password: 'freethecloud2013'
       }, true);
